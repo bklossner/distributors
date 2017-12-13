@@ -3,14 +3,18 @@
 namespace com\bob\distributors;
 
 /**
- * Created by PhpStorm.
- * User: bob
- * Date: 6/21/17
- * Time: 11:40 PM
+ * Class DistributorListIterator
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
  */
 class DistributorListIterator {
 
+	/** @var DistributorList $distributorList */
 	protected $distributorList;
+
+	/** @var int $currentDistributor */
 	protected $currentDistributor = 0;
 
 
