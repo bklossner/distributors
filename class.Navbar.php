@@ -3,21 +3,24 @@
 namespace com\bob\distributors;
 
 /**
- * Created by PhpStorm.
- * User: bob
- * Date: 7/23/17
- * Time: 3:45 PM
+ * Class Navbar
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
  */
-
 class Navbar {
 
+	/** @var string $locale */
 	private $locale;
 
+	/** @var array $aAlphabet */
 	private $aAlphabet = array(
 		"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 		"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 	);
 
+	/** @var array $aHasDistributors */
 	private $aHasDistributors = array();
 
 	/**
@@ -113,9 +116,9 @@ class Navbar {
 	/**
 	 * @param string $locale
 	 *
-	 * @return Navbar
+	 * @return $this
 	 */
-	public function setLocale( $locale ) {
+	public function setLocale(string $locale) {
 		$this->locale = $locale;
 
 		return $this;
@@ -130,8 +133,6 @@ class Navbar {
 			echo $navbar;
 			die();
 		}
-
-
 	}
 
 	/**
