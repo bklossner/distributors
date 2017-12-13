@@ -2,6 +2,13 @@
 
 namespace com\bob\distributors;
 
+/**
+ * Class DisplayDistributors
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
+ */
 class DisplayDistributors {
 
 	/**
@@ -71,9 +78,6 @@ class DisplayDistributors {
 
 			// The list of master/duplicate arrays
 			$allStatesArray[] = $distr->state;
-
-
-
 		}
 
 		// Return an array of unique states from the $allStatesArray
@@ -189,11 +193,11 @@ class DisplayDistributors {
 
 
 	/**
-	 * @param $uid
+	 * @param string $uid
 	 *
 	 * @return $this
 	 */
-	public function getDistributorByID($uid) {
+	public function getDistributorByID(string $uid) {
 
 		// Get the parameter uid from the browser
 		if(isset($_GET['uid'])) {
@@ -215,9 +219,6 @@ class DisplayDistributors {
 
 			// Get all of the usermeta goodies needed to set the address
 			$allMetaData = get_user_meta($uid);
-
-			// VAR DUMP
-			//var_dump($allMetaData);
 
 			$uid = $allMetaData['_uid'][0];
 			$this->name = $user->display_name;
@@ -246,22 +247,11 @@ class DisplayDistributors {
 	 * Generate a Distributor based on the user id
 	 * @param string $uid
 	 */
-	public function getDistributor($uid) {
-
-		$uid = "";
-		$userInfo = "";
-		$displayName = "";
-		$addr_1 = "";
-		$addr_2 = "";
-		$city = "";
-		$userState = "";
-		$zipcode = "";
-		$telephone = "";
-		$email = "";
+	public function getDistributor(string $uid) {
 
 		$distributor = null;
 
-		$uid = $_GET['uid'];
+		$suid = $_GET[$uid];
 
 		/**
 		 * Get the user based on their defined id, saved in wp_usermeta.
@@ -269,16 +259,13 @@ class DisplayDistributors {
 		$queryArgs = array(
 			'role' => 'Distributor',
 			'meta_key' => '_uid',
-			'meta_value' => $uid,
+			'meta_value' => $suid,
 			'fields' => 'all_with_meta'
 		);
 
 		$userQuery = new WP_User_Query($queryArgs);
 
 		$users = $userQuery->get_results();
-
-		// VAR DUMP
-		//var_export($users);
 
 		if( !empty($users)) {
 
@@ -319,30 +306,17 @@ class DisplayDistributors {
 			echo "<p>We cannot find the information.</p>";
 			echo "<p>Please verify the URL in your browser is correct.</p>";
 		}
-
-
 	}
 
 
 	/**
 	 * Generate a Distributor based on the user id
 	 * @param string $uid
+	 * @return Distributor|null
 	 */
-	public function getCurrentDistributor($suid) {
+	public function getCurrentDistributor(string $uid) {
 
-		$setUID = $suid;
-
-		$uid = "";
-		$userInfo = "";
-		$displayName = "";
-		$addr_1 = "";
-		$addr_2 = "";
-		$city = "";
-		$userState = "";
-		$zipcode = "";
-		$telephone = "";
-		$email = "";
-
+		$currUID = $uid;
 		$distributor = null;
 
 		/**
@@ -351,7 +325,7 @@ class DisplayDistributors {
 		$queryArgs = array(
 			'role' => 'Distributor',
 			'meta_key' => '_uid',
-			'meta_value' => $setUID,
+			'meta_value' => $currUID,
 			'fields' => 'all_with_meta'
 		);
 
@@ -407,6 +381,7 @@ class DisplayDistributors {
 
 	/**
 	 * Function to respond to changing the locale in the Distributors page to show Canadian or USA distributors
+	 * @return void
 	 */
 	function updateProfile() {
 
@@ -501,7 +476,10 @@ class DisplayDistributors {
 	}
 
 
-
+	/**
+	 * Get all of the distributors
+	 * @return array
+	 */
 	public function getAllDistributors() {
 
 		// Query to return all Distributors
@@ -544,6 +522,7 @@ class DisplayDistributors {
 
 	/**
 	 * Function to query the Wordpress database and return all users with a role of "Distributor"
+	 * @return void
 	 */
 	public function emailAllDistributors() {
 
@@ -551,7 +530,6 @@ class DisplayDistributors {
 		$queryArgs = array(
 			'role' => 'Distributor',
 			'fields' => 'all_with_meta',
-
 		);
 
 		$userQuery = new WP_User_Query($queryArgs);
@@ -570,18 +548,17 @@ class DisplayDistributors {
 			}
 		}
 		else {
-			echo "We cannot find any users with role = 'Distributor' in this database.";
+			echo "We cannot find any users with role = '" . $queryArgs['role'] . "' in this database.";
 		}
 
 	}
 
-	public function generateGeoJSONFile($filepath) {
 
-		/**
-		 * The JSON file we're reading
-		 * @var string $file
-		 */
-		$file = $filepath;
+	/**
+	 * Generate a GEOJson file from a regular JSON file
+	 * @param string $fileIn  The JSON file we're reading from
+	 */
+	public function generateGeoJSONFile(string $fileIn) {
 
 		/**
 		 * The file we want to write the geojson information
@@ -592,7 +569,7 @@ class DisplayDistributors {
 		try {
 
 			// Read the contents of the master distributors json file
-			$json = json_decode(file_get_contents($file));
+			$json = json_decode(file_get_contents($fileIn));
 
 			/**
 			 * The GeoJSON array structure
@@ -619,8 +596,6 @@ class DisplayDistributors {
 				$discountCode = $distributor->discountCode;
 				$phoneNum = $distributor->phone;
 				$email = strtolower($distributor->email);
-
-				$address = "";
 
 				// Combine all of the address key/value pairs to make an address string we can pass to Google Maps API
 				if(strpos($addr_1, "PO BOX") === 0) {
@@ -661,12 +636,6 @@ class DisplayDistributors {
 
 					/** @var string $resCountry */
 					$resCountry = null;
-
-					/** @var float $lat */
-					$lat = 0;
-
-					/** @var float $lng */
-					$lng = 0;
 
 					// Get the address from Google Map's response
 					// This URL shows a sample JSON response from Google Maps:
