@@ -3,73 +3,39 @@
 namespace com\bob\distributors;
 
 /**
- *
  * Class Distributor
+ * @package com\bob\distributors
  * @version 1.0.0
- * @author Bob Klossner <bobklossner@gmail.com>
+ * @author Bob Klossner <farfisa5@gmail.com>
  * @copyright 2017 Bob Klossner
- *
  */
 class Distributor
 {
-	/**
-	 * The unique ID of the distributor
-	 * @var string
-	 */
+	/** @var string $uid    The unique ID of the distributor */
 	private $uid;
 
-	/**
-	 * The name of the distributor
-	 *
-	 * @var string
-	 */
+	/** @var string $name   The name of the distributor */
 	private $name;
 
-	/**
-	 * The distributor's address
-	 *
-	 * @var Address
-	 */
+	/** @var Address $address   The distributor's address */
 	private $address;
 
-	/**
-	 * The distributor's level
-	 * This value determines the distributor's icon shown on the Google Map
-	 *
-	 * @var string
-	 */
+	/** @var string $discountCode   The distributor's level */
 	private $discountCode;
 
-	/**
-	 * The distributor's phone number
-	 *
-	 * @var string
-	 */
+	/** @var string $phone  The distributor's phone number */
 	private $phone;
 
-	/**
-	 * The distributor's email address
-	 *
-	 * @var string
-	 */
+	/** @var string $email  The distributor's email address */
 	private $email;
 
-	/**
-	 * The distributor's user name that will be referenced in table wp_users
-	 * @var string $uname   User Name
-	 */
+	/** @var string $uname  The distributor's user name that will be referenced in table wp_users */
 	private $uname;
 
-	/**
-	 * The icon that will be displayed after the distributor's name in the 'accordion' dropdown in the Distributors page.
-	 * @var string $icon
-	 */
+	/** @var string $icon   Filepath of the distributor's icon */
 	private $icon;
 
-	/**
-	 * The user role.
-	 * Mapped to Wordpress table wp_options.wp_user_roles
-	 */
+	/** The user role. Mapped to Wordpress table wp_options.wp_user_roles */
 	const WP_USER_ROLE = "distributor";
 
 	/**
@@ -80,7 +46,7 @@ class Distributor
 	 * @param string $phone
 	 * @param string $email
 	 */
-	public function __construct($name, Address $address, $discountCode, $phone, $email)
+	public function __construct(string $name, Address $address, string $discountCode, string $phone, string $email)
 	{
 		$this->name = $name;
 		$this->address = $address;
@@ -111,9 +77,11 @@ class Distributor
 
 	/**
 	 * Set the distributor's user id
-	 * @param $string $uid
+	 * @param string $uid
+	 *
+	 * @return $this
 	 */
-	public function setUid($uid) {
+	public function setUid(string $uid) {
 		$this->uid = $uid;
 		return $this;
 	}
@@ -130,8 +98,10 @@ class Distributor
 	/**
 	 * Set the distributor's name
 	 * @param string $name
+	 *
+	 * @return $this
 	 */
-	public function setName($name)
+	public function setName(string $name)
 	{
 		$this->name = $name;
 		return $this;
@@ -157,8 +127,10 @@ class Distributor
 	/**
 	 * Set the distributor's address
 	 * @param Address $address
+	 *
+	 * @return $this
 	 */
-	public function setAddress($address)
+	public function setAddress(Address $address)
 	{
 		$this->address = $address;
 		return $this;
@@ -176,8 +148,10 @@ class Distributor
 	/**
 	 * Set the distributor's discount code
 	 * @param string $discountCode
+	 *
+	 * @return $this
 	 */
-	public function setDiscountCode($discountCode)
+	public function setDiscountCode(string $discountCode)
 	{
 		$this->discountCode = $discountCode;
 		return $this;
@@ -193,10 +167,12 @@ class Distributor
 	}
 
 	/**
-	 * Get the distributor's phone number
+	 * Set the distributor's phone number
 	 * @param string $phone
+	 *
+	 * @return $this
 	 */
-	public function setPhone($phone)
+	public function setPhone(string $phone)
 	{
 		$this->phone = $phone;
 		return $this;
@@ -212,8 +188,10 @@ class Distributor
 
 	/**
 	 * @param string $email
+	 *
+	 * @return $this
 	 */
-	public function setEmail($email)
+	public function setEmail(string $email)
 	{
 		$this->email = $email;
 		return $this;
@@ -221,10 +199,8 @@ class Distributor
 
 	/**
 	 * Generate a username from the distributor's store name by replacing any whitespaces with underscores
-	 *   and limiting the username to two words with an underscore between them.
+	 * and limiting the username to two words with an underscore between them.
 	 * @example:    Neo Geo Boomble'/pants  =   Neo_Geo
-	 * @param string $uname
-	 * @return void
 	 */
 	public function createUserName() {
 
@@ -396,8 +372,10 @@ class Distributor
 	/**
 	 * Function to retrieve a Distributor's info based on their wordpress wp_user id
 	 * @param string $uid
+	 *
+	 * @return Distributor|null
 	 */
-	public function getDistributor($uid) {
+	public function getDistributor(string $uid) {
 		$user = get_user_by('id', $uid);
 		$distributor = null;
 
@@ -475,10 +453,10 @@ $this->address .
 
 	/**
 	 * Function to convert cases of certain words in the Distributor's Name
-	 * @param $string
+	 * @param $s
 	 * @return string
 	 */
-	function titleCase($string) {
+	function titleCase(string $s) {
 		/*
 		 * Exceptions in lower case are words you don't want converted
 		 * Exceptions all in upper case are any words you don't want converted to title case
@@ -489,7 +467,7 @@ $this->address .
 		$exceptions = [ "CSI", "PO", "PA", "NC", "LC", "SO", "s", "SW", "LSH", "AEP", "MHQ", "LLC", "LLC,", "L.A.W.S.", "PSE", "-A", "NC/SO", "WAC", "CC" ];
 
 		foreach ($delimiters as $dlnr => $delimiter){
-			$words = explode($delimiter, $string);
+			$words = explode($delimiter, $s);
 			$newwords = array();
 			foreach ($words as $wordnr => $word){
 
@@ -510,9 +488,9 @@ $this->address .
 				}
 				array_push($newwords, $word);
 			}
-			$string = join($delimiter, $newwords);
-		}//foreach
-		return $string;
+			$s = join($delimiter, $newwords);
+		}
+		return $s;
 	}
 
 }
