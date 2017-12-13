@@ -3,21 +3,18 @@
 namespace com\bob\distributors;
 
 /**
- * Created by PhpStorm.
- * User: bob
- * Date: 6/21/17
- * Time: 10:19 PM
+ * Class DistributorList
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
  */
 class DistributorList {
 
-	/**
-	 * @var array $distributors
-	 */
+	/** @var array $distributors */
 	private $distributors = array();
 
-	/**
-	 * @var int $distributorCount
-	 */
+	/** @var int $distributorCount */
 	private $distributorCount = 0;
 
 	/**
@@ -34,18 +31,18 @@ class DistributorList {
 	}
 
 	/**
-	 * @param $newCount
+	 * @param int $newCount
 	 */
-	private function setDistributorCount($newCount) {
+	private function setDistributorCount(int $newCount) {
 		$this->distributorCount = $newCount;
 	}
 
 	/**
-	 * @param $distributorNumberToGet
+	 * @param int $distributorNumberToGet
 	 *
 	 * @return mixed|null
 	 */
-	public function getDistributor($distributorNumberToGet) {
+	public function getDistributor(int $distributorNumberToGet) {
 		if ( (is_numeric($distributorNumberToGet)) &&
 		     ($distributorNumberToGet <= $this->getDistributorCount())) {
 			return $this->distributors[$distributorNumberToGet];
