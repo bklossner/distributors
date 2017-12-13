@@ -96,38 +96,6 @@ class Distributor
 			$this->email = $email;
 		}
 
-		// Determine which icon should be assigned to the Distributor
-		// If distributorLevel != WHOLESALE, start parsing and substringing
-		if($this->discountCode != "wholesale") {
-
-			// Find the index after the "L"
-			$start = strrpos($this->discountCode, 'l');
-
-			// Find the beginning of "DIST" in the string
-			$end = strrpos($this->discountCode, 'd');
-
-			// Get the distributor level based on the substring parameters
-			$level = substr($this->discountCode, $start + 1, $end - 1);
-
-			/**
-			 * Business Logic for determining icons
-			 *
-			 * level = 1 || 2 || 2.5; $text = "master"
-			 * level >= 3; $text = "distributor"
-			 * level = "wholesale"; $text = dealer
-			 */
-
-			if($level == 1 || $level == 2 || $level == 2.5) {
-				$this->icon = ICONS_DIRECTORY . 'icon-legend-silver.png';
-            }
-			else if($level >= 3) {
-				$this->icon = ICONS_DIRECTORY . 'icon-legend-red.png';
-            }
-		}
-		else {
-			$this->icon = ICONS_DIRECTORY . 'icon-legend-blue.png';
-		}
-
 		return $this;
 	}
 
@@ -333,8 +301,6 @@ class Distributor
 
 					/**
 					 * Save user password to their wp_user_meta table.
-					 * We are not emailing the user when their account is created so we have to save the password
-					 *  in another location so it can be accessed at a later time.
 					 */
 
 					// Add the Distributor user id
@@ -378,7 +344,6 @@ class Distributor
 			}
 			catch(Exception $e) {
 				$progress = array('type'=>'error', 'message'=>"<p>ERROR: Could not add user to wp_users. " . $e->getTraceAsString() . $this->getName()."</p>");
-				//$progress .= "<p>ERROR: Could not add user to wp_users. " . $e->getTraceAsString() . "</p>";
 			}
 
 		}
@@ -443,9 +408,6 @@ class Distributor
 
 			// Get all of the usermeta goodies needed to set the address
 			$allMetaData = get_user_meta($uid);
-
-			// VAR DUMP
-			//var_dump($allMetaData);
 
 			$uid = $allMetaData['_uid'][0];
 			$addr1 = $allMetaData['_address_addr1'][0];
