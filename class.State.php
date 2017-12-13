@@ -3,20 +3,18 @@
 namespace com\bob\distributors;
 
 /**
- * Created by PhpStorm.
- * User: bob
- * Date: 6/26/17
- * Time: 12:39 PM
+ * Class State
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
  */
 class State {
 
-	/**
-	 * The abbreviation of the state/province
-	 * @var string $stateAbbreviation
-	 * @example MD
-	 */
+	/** @var string $stateAbbreviation  The abbreviation of the state/province */
 	private $stateAbbreviation;
 
+	/** @var array $aStates */
 	private $aStates = [
 		'AL' => 'Alabama',
 		'AK' => 'Alaska',
@@ -85,9 +83,7 @@ class State {
 		'YT' => 'Yukon Territory'
 	];
 
-	/**
-	 * @var DistributorList $distributorList
-	 */
+	/** @var DistributorList $distributorList */
 	private $distributorList;
 
 
@@ -95,10 +91,9 @@ class State {
 
 	/**
 	 * State constructor.
-	 *
 	 * @param $stateAbbreviation
 	 */
-	public function __construct($stateAbbreviation) {
+	public function __construct(string $stateAbbreviation) {
 		$this->stateAbbreviation = $stateAbbreviation;
 	}
 
@@ -127,20 +122,6 @@ class State {
 			"<h3 id='$this->stateAbbreviation' class='state'>
 				<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
 				. $this->getLongName() .
-			"</h3>";
-		return trim($content);
-	}
-
-	/**
-	 * Output the state in an HTML-friendly format for display purposes
-	 * @param string $count
-	 * @return string
-	 */
-	public function display($count) {
-		$content =
-			"<h3 id='$this->stateAbbreviation' class='state'>
-				<span class='glyphicon glyphicon-plus' aria-hidden='true'></span> "
-			. $this->getLongName() . " (" . $count . ")" .
 			"</h3>";
 		return trim($content);
 	}
@@ -189,65 +170,11 @@ class State {
 	 * @param  string $format Accepts 'abbr' to output abbreviated state, default full state name.
 	 * @return string          Formatted state on success,
 	 */
-	static function format_state( $input, $format = '' ) {
+	public function format_state(string $input, string $format = '' ) {
 		if( ! $input || empty( $input ) )
 			return "";
 
-		$states = array (
-			'AL'=>'Alabama',
-			'AK'=>'Alaska',
-			'AZ'=>'Arizona',
-			'AR'=>'Arkansas',
-			'CA'=>'California',
-			'CO'=>'Colorado',
-			'CT'=>'Connecticut',
-			'DE'=>'Delaware',
-			'DC'=>'District Of Columbia',
-			'FL'=>'Florida',
-			'GA'=>'Georgia',
-			'HI'=>'Hawaii',
-			'ID'=>'Idaho',
-			'IL'=>'Illinois',
-			'IN'=>'Indiana',
-			'IA'=>'Iowa',
-			'KS'=>'Kansas',
-			'KY'=>'Kentucky',
-			'LA'=>'Louisiana',
-			'ME'=>'Maine',
-			'MD'=>'Maryland',
-			'MA'=>'Massachusetts',
-			'MI'=>'Michigan',
-			'MN'=>'Minnesota',
-			'MS'=>'Mississippi',
-			'MO'=>'Missouri',
-			'MT'=>'Montana',
-			'NE'=>'Nebraska',
-			'NV'=>'Nevada',
-			'NH'=>'New Hampshire',
-			'NJ'=>'New Jersey',
-			'NM'=>'New Mexico',
-			'NY'=>'New York',
-			'NC'=>'North Carolina',
-			'ND'=>'North Dakota',
-			'OH'=>'Ohio',
-			'OK'=>'Oklahoma',
-			'OR'=>'Oregon',
-			'PA'=>'Pennsylvania',
-			'RI'=>'Rhode Island',
-			'SC'=>'South Carolina',
-			'SD'=>'South Dakota',
-			'TN'=>'Tennessee',
-			'TX'=>'Texas',
-			'UT'=>'Utah',
-			'VT'=>'Vermont',
-			'VA'=>'Virginia',
-			'WA'=>'Washington',
-			'WV'=>'West Virginia',
-			'WI'=>'Wisconsin',
-			'WY'=>'Wyoming',
-		);
-
-		foreach( $states as $abbr => $name ) {
+		foreach( $this->aStates as $abbr => $name ) {
 			if ( preg_match( "/\b($name)\b/", ucwords( strtolower( $input ) ), $match ) )  {
 				if( 'abbr' == $format ){
 					return $abbr;
