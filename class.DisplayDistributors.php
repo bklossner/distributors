@@ -25,7 +25,7 @@ class DisplayDistributors {
 	public function getDistributorsByCountry() {
 
 		// Get the main JSON file that is generated from the database query
-		$file = SETINA_DISTRIBUTORS_JSON;
+		$file = JSON_FILE;
 
 		// Make the request
 		$request = wp_remote_get( $file );
@@ -261,7 +261,7 @@ class DisplayDistributors {
 
 		$distributor = null;
 
-		$setinaUID = $_GET['uid'];
+		$uid = $_GET['uid'];
 
 		/**
 		 * Get the user based on their defined id, saved in wp_usermeta.
@@ -269,7 +269,7 @@ class DisplayDistributors {
 		$queryArgs = array(
 			'role' => 'Distributor',
 			'meta_key' => '_uid',
-			'meta_value' => $setinaUID,
+			'meta_value' => $uid,
 			'fields' => 'all_with_meta'
 		);
 
@@ -330,7 +330,7 @@ class DisplayDistributors {
 	 */
 	public function getCurrentDistributor($suid) {
 
-		$setinaUID = $suid;
+		$setUID = $suid;
 
 		$uid = "";
 		$userInfo = "";
@@ -351,7 +351,7 @@ class DisplayDistributors {
 		$queryArgs = array(
 			'role' => 'Distributor',
 			'meta_key' => '_uid',
-			'meta_value' => $setinaUID,
+			'meta_value' => $setUID,
 			'fields' => 'all_with_meta'
 		);
 
@@ -496,8 +496,6 @@ class DisplayDistributors {
 
 		echo $response . $message;
 
-
-
 		// Required for AJAX to return a response in Wordpress
 		die();
 	}
@@ -548,8 +546,6 @@ class DisplayDistributors {
 	 * Function to query the Wordpress database and return all users with a role of "Distributor"
 	 */
 	public function emailAllDistributors() {
-
-
 
 		// Query to return all users with the role of "Distributor"
 		$queryArgs = array(
