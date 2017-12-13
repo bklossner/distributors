@@ -2,50 +2,32 @@
 
 namespace com\bob\distributors;
 
+/**
+ * Class Address
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
+ */
 class Address
 {
-	/**
-	 * The first line of the street address
-	 *
-	 * @var string
-	 */
+	/** @var string $addr_1 */
 	private $addr_1;
 
-	/**
-	 * The second line of the street address
-	 *
-	 * @var string
-	 */
+	/** @var string $addr_2 */
 	private $addr_2;
 
-	/**
-	 * The city
-	 *
-	 * @var string
-	 */
+	/** @var string $city */
 	private $city;
 
-	/**
-	 * The state
-	 *
-	 * @var string
-	 */
+	/** @var State $state */
 	private $state;
 
-	/**
-	 * The zipcode (postal code)
-	 *
-	 * @var string
-	 */
+	/** @var string $zipcode */
 	private $zipcode;
 
-	/**
-	 * The country
-	 *
-	 * @var string
-	 */
+	/** @var string $country */
 	private $country;
-
 
 	/** @var array $validCountries  */
 	public static $validCountries = ['USA', 'Canada'];
@@ -60,7 +42,7 @@ class Address
 	 * @param $zipcode
 	 * @param $country
 	 */
-	public function __construct($addr_1, $addr_2, $city, $state, $zipcode, $country)
+	public function __construct(string $addr_1, string $addr_2, string $city, State $state, string $zipcode, string $country)
 	{
 		$this->addr_1 = $addr_1;
 		$this->addr_2 = $addr_2;
@@ -82,7 +64,7 @@ class Address
 	/**
 	 * @param string $addr_1
 	 */
-	public function setAddr1($addr_1)
+	public function setAddr1(string $addr_1)
 	{
 		$this->addr_1 = $addr_1;
 	}
@@ -98,7 +80,7 @@ class Address
 	/**
 	 * @param string $addr_2
 	 */
-	public function setAddr2($addr_2)
+	public function setAddr2(string $addr_2)
 	{
 		$this->addr_2 = $addr_2;
 	}
@@ -114,7 +96,7 @@ class Address
 	/**
 	 * @param string $city
 	 */
-	public function setCity($city)
+	public function setCity(string $city)
 	{
 		$this->city = $city;
 	}
@@ -130,7 +112,7 @@ class Address
 	/**
 	 * @param string $state
 	 */
-	public function setState($state)
+	public function setState(string $state)
 	{
 		$this->state = new State($state);
 	}
@@ -146,7 +128,7 @@ class Address
 	/**
 	 * @param string $zipcode
 	 */
-	public function setZipcode($zipcode)
+	public function setZipcode(string $zipcode)
 	{
 		$this->zipcode = $zipcode;
 	}
@@ -162,13 +144,14 @@ class Address
 	/**
 	 * @param string $country
 	 */
-	public function setCountry($country)
+	public function setCountry(string $country)
 	{
 		$this->country = $country;
 	}
 
 	/**
-	 * Output the address in HTML-friendly format
+	 * Output the address as HTML
+	 * @return string
 	 */
 	function __toString()
 	{
@@ -189,7 +172,12 @@ class Address
 		return $content;
 	}
 
-	protected function addressCase($string) {
+	/**
+	 * @param string $addr
+	 *
+	 * @return string
+	 */
+	protected function addressCase(string $addr) {
 		/*
 		 * Exceptions in lower case are words you don't want converted
 		 * Exceptions all in upper case are any words you don't want converted to title case
@@ -200,7 +188,7 @@ class Address
 		$exceptions = [ "SW", "-A", "AEP", "LLC", "#C" ];
 
 		foreach ($delimiters as $dlnr => $delimiter){
-			$words = explode($delimiter, $string);
+			$words = explode($delimiter, $addr);
 			$newwords = array();
 			foreach ($words as $wordnr => $word){
 
@@ -221,8 +209,8 @@ class Address
 				}
 				array_push($newwords, $word);
 			}
-			$string = join($delimiter, $newwords);
+			$addr = join($delimiter, $newwords);
 		}//foreach
-		return $string;
+		return $addr;
 	}
 }
