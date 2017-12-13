@@ -3,20 +3,18 @@
 namespace com\bob\distributors;
 
 /**
- * Created by PhpStorm.
- * User: bob
- * Date: 6/26/17
- * Time: 2:26 PM
+ * Class StateList
+ * @package com\bob\distributors
+ * @version 1.0.0
+ * @author Bob Klossner <farfisa5@gmail.com>
+ * @copyright 2017 Bob Klossner
  */
 class StateList {
-	/**
-	 * @var array $states
-	 */
+
+	/** @var array $states */
 	private $states = array();
 
-	/**
-	 * @var int $stateCount
-	 */
+	/** @var int $stateCount */
 	private $stateCount = 0;
 
 	/**
@@ -33,18 +31,18 @@ class StateList {
 	}
 
 	/**
-	 * @param $newCount
+	 * @param int $newCount
 	 */
-	private function setStateCount($newCount) {
+	private function setStateCount(int $newCount) {
 		$this->stateCount = $newCount;
 	}
 
 	/**
-	 * @param $stateNumberToGet
+	 * @param int $stateNumberToGet
 	 *
 	 * @return mixed|null
 	 */
-	public function getState($stateNumberToGet) {
+	public function getState(int $stateNumberToGet) {
 		if ( (is_numeric($stateNumberToGet)) &&
 		     ($stateNumberToGet <= $this->getStateCount())) {
 			return $this->states[$stateNumberToGet];
