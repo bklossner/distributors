@@ -42,7 +42,6 @@ class Navbar {
 
 		/**
 		 * The string that determines how to filter the distributors
-		 * Either by Canada or USA
 		 * @var string $filter
 		 */
 		if(isset($_POST['locale'])) {
@@ -69,12 +68,8 @@ class Navbar {
 
 		// Iterate through the list of Distributors that have been filtered by the country
 		foreach ($distributorListByCountry as $distr) {
-
 			// The list of master/duplicate arrays
 			$allStatesArray[] = $distr->state;
-
-
-
 		}
 
 		// Return an array of unique states from the $allStatesArray
@@ -127,7 +122,7 @@ class Navbar {
 	}
 
 	/**
-	 * AJAX function to change the locale ("Canada" || "USA")
+	 * AJAX function to change the locale
 	 */
 	public function changeLocale() {
 		if(isset($_POST['locale'])) {
@@ -145,8 +140,6 @@ class Navbar {
 	 * @return string
 	 */
 	public function __toString() {
-		// TODO: Implement __toString() method.
-		// TODO: Display the navbar in an HTML-friendly format.
 
 		// Wrap the navbar in an unnumbered list
 		$content = "<ul class='navbar-state list-inline'>";
